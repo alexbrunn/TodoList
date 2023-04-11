@@ -1,9 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TodoForm from "./TodoForm";
-import Todo from "./Todo";
+import TodoComponent from "./TodoComponent";
+import {CategoryButton, types} from "./CategoryButton";
 
 function TodoList() {
     const [todos, setTodos] = useState([]);
+    const [active, setActive] = useState();
+    const [filteredTodos, setFilteredTodos] = useState([])
+
+    useEffect(() => {
+        filterTodos();
+    }, [active, todos]);
 
     // Functie om nieuwe taak toe te voegen
     const addTodo = todo => {
@@ -22,8 +29,9 @@ function TodoList() {
             return;
         }
 
-        setTodos(prevState => prevState.map(item => (item.id === todoId ? newValue : item))
-        );
+        setTodos(prevState => {
+            return prevState.map(item => (item.id === todoId ? newValue : item))
+        });
     };
 
     // Functie om taak te verwijderen
@@ -33,9 +41,21 @@ function TodoList() {
         setTodos(removeArr)
     }
 
+    const filterTodos = () => {
+        console.log("FilterTodos");
+        if(!active) setFilteredTodos(todos);
+        else {
+            setFilteredTodos(todos.filter(todo => {
+                return todo.typeId === active
+            }))
+            console.log("Should filter now");
+            // setFilteredTodos(todos);
+        }
+    }
+
     // Functie om taak als voltooid te markeren
     const completeTodo = id => {
-        let updatedTodos =todos.map(todo => {
+        let updatedTodos = todos.map(todo => {
             if (todo.id === id) {
                 todo.isComplete = !todo.isComplete;
             }
@@ -48,7 +68,8 @@ function TodoList() {
         <div>
             <h1>Wat is het plan voor vandaag?</h1>
             <TodoForm onSubmit={addTodo}/>
-            <Todo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo}/>
+            <CategoryButton setActiveCallback={setActive}/>
+            <TodoComponent todos={filteredTodos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo}/>
         </div>
     );
 }

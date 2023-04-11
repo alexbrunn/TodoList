@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
+import {types} from "./CategoryButton";
 
 function TodoForm(props) {
     // definieert een staat (state) voor het inputveld en gebruikt de waarde van props.edit.value als de standaardwaarde (default value)
@@ -22,7 +23,8 @@ function TodoForm(props) {
         // Geeft een willekeurig ID-nummer aan de invoertekst en slaat deze op in de console
         props.onSubmit({
             id: Math.floor(Math.random() * 10000),
-            text: input
+            text: input,
+            typeId: types[types.length - 1].id
         });
 
         // Vernieuwt het invoerveld na het indienen

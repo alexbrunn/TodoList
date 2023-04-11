@@ -32,9 +32,17 @@ h1 {
     font-size: 24px;
 }
 
+. {
+    cursor: pointer;
+}
+
 .complete {
     text-decoration: line-through;
     opacity: 0.4;
+}
+
+.todo-text {
+    cursor: pointer;
 }
 
 .todo-form {
@@ -128,6 +136,28 @@ h1 {
             rgba(20, 159, 255, 1) 0%,
             rgba(17, 122, 255, 1) 100%
     );
+}
+
+.ButtonGroup {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-right: 8px;
+}
+
+.ButtonToggle {
+    border: 2px solid white;
+    border-radius: 50%;
+    background-color: transparent;
+    color: white;
+    padding: 5px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.ButtonToggle.active {
+    background-color: red;
+    color: white;
 }
 
 .icons {
